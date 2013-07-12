@@ -1,9 +1,4 @@
 /*
-Compile command on my system, may be changed depending on your setup.
-
-gcc -O3 -Wall -c -fmessage-length=0 -MMD -MP -MF"lighttz.d" -MT"lighttz.d" -o"lighttz.o" "../lighttz.c"
-gcc  -o"lighttz"  ./lighttz.o   -lev
-
 You need to have Libev installed:
 http://software.schmorp.de/pkg/libev.html
 */
@@ -81,18 +76,20 @@ static void write_cb(struct ev_loop *loop, struct ev_io *w, int revents)
 { 
 	struct client *cli= ((struct client*) (((char*)w) - offsetof(struct client,ev_write)));
 	static char buf[512];
+	char *p = "set";
 
 	if (cli->cmd == 0) {
 		char* read = readdb((char*)cli->data);
-		char* p = read;
+		p = read;
 		if (p == 0) p = "(null)";
-		sprintf(buf, "HTTP/1.1 200 OK\r\nContent-Length: %d\r\nConnection: close\r\nContent-Type: text/html\r\nDate: Sat, 26 Apr 2008 01:13:35 GMT\r\nServer: lighttz/0.1\r\n\r\n\
-Hello %s", 6+strlen(p), p);
 	} else {
 		writedb((char*)cli->data, (char*)cli->data);
-		sprintf(buf, "HTTP/1.1 200 OK\r\nContent-Length: %d\r\nConnection: close\r\nContent-Type: text/html\r\nDate: Sat, 26 Apr 2008 01:13:35 GMT\r\nServer: lighttz/0.1\r\n\r\n\
-Hello set", 9);
 	}
+
+	sprintf(buf, "HTTP/1.1 200 OK\r\nContent-Length: %d\r\n\
+Connection: close\r\nContent-Type: text/html\r\nDate: Sat, 26 Apr 2008 01:13:35 GMT\r\n\
+Server: leveldb-http-server/0.1\r\n\r\n\
+Hello %s", 6 + strlen(p), p);
 
  	if (revents & EV_WRITE){
 		write(cli->fd,buf,strlen(buf));
