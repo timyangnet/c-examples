@@ -3,7 +3,16 @@ leveldb-http-server
 
 http wrapper for leveldb
 
-use libev (http://software.schmorp.de/pkg/libev.html)
+Install libev (http://software.schmorp.de/pkg/libev.html) and leveled in the same directory of c-examples
+
+<pre>
+cd leveldb-1.12.0
+./configure
+make
+
+cd leveldb-1.12.0
+make
+</pre>
 
 - set key
 

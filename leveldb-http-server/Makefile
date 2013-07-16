@@ -1,9 +1,10 @@
-CC_OPTS=-Wall -lev -lleveldb -ggdb3 -I../../lib/include -I../../leveldb-1.12.0/include -L../../lib/lib -L../../leveldb-1.12.0
+CC_OPTS=-Wall -ggdb3 -lev -lleveldb -I../../libev-4.15 -I../../leveldb-1.12.0/include -L../../libev-4.15/.libs -L../../leveldb-1.12.0
 
 all: bin/leveldb-httpd
 
 clean:
-	rm -f *.o bin/*
+	rm -rf *.o bin/*
 
 bin/leveldb-httpd: main.c
+	mkdir -p bin
 	$(CC) $(CC_OPTS) -o $@ $<
