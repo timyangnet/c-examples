@@ -14,7 +14,7 @@
 #include <ev.h>
 #include <leveldb/c.h>
 
-#define SERVER_PORT 8002
+#define SERVER_PORT 8000
 char* readdb(char*);
 void writedb(char*,char*);
 

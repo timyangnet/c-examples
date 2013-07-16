@@ -16,9 +16,9 @@ make
 
 - set key
 
-curl http://localhost:8002/set?key
+curl http://localhost:8000/set?key
 
 - get key
 
-curl http://localhost:8002/get?key
+curl http://localhost:8000/get?key
 
